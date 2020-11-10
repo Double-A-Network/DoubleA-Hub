@@ -1,9 +1,14 @@
 package com.andrew121410.mc.doubleahub.events;
 
 import com.andrew121410.mc.doubleahub.DoubleAHub;
+import com.andrew121410.mc.doubleahub.worldguard.DoubleJumpFlagHandler;
+import com.andrew121410.mc.world16utils.chat.Translate;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,32 +27,34 @@ public class OnDoubleJump implements Listener {
 
     @EventHandler
     public void onPlayerMoveEvent(PlayerMoveEvent event) {
-        Player p = event.getPlayer();
-        if (p.getGameMode() == GameMode.CREATIVE) {
+        Player player = event.getPlayer();
+        if (this.plugin.getSetListMap().getNoDoubleJumpUUID().contains(player.getUniqueId())) return;
+        if (player.getGameMode() == GameMode.CREATIVE) return;
+        if (player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.AIR) return;
+        if (player.isFlying()) return;
+        if (!DoubleJumpFlagHandler.canJump(player.getLocation())) {
+            player.setAllowFlight(false);
             return;
         }
 
-        if (p.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock().getType() == Material.AIR) {
-            return;
-        }
-
-        if (p.isFlying()) {
-            return;
-        }
-
-        p.setAllowFlight(true);
+        player.setAllowFlight(true);
     }
 
     @EventHandler
     public void onPlayerToggleFlightEvent(PlayerToggleFlightEvent event) {
         Player player = event.getPlayer();
-        if (player.getGameMode() == GameMode.CREATIVE) {
+        if (this.plugin.getSetListMap().getNoDoubleJumpUUID().contains(player.getUniqueId())) return;
+        if (player.getGameMode() == GameMode.CREATIVE) return;
+        if (!DoubleJumpFlagHandler.canJump(player.getLocation())) {
+            event.setCancelled(true);
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Translate.color("&cYou are in a no DoubleJump zone!")));
             return;
         }
+
         event.setCancelled(true);
         player.setAllowFlight(false);
         player.setFlying(false);
-        player.setVelocity(player.getLocation().getDirection().multiply(1.0D).setY(0.5D));
+        player.setVelocity(player.getLocation().getDirection().multiply(1.0D).setY(1.0D));
         player.playEffect(player.getLocation(), Effect.BLAZE_SHOOT, 0);
     }
 }
