@@ -92,7 +92,14 @@
             <groupId>org.geysermc.cumulus</groupId>
             <artifactId>cumulus</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.andrew121410.mc</groupId>
+            <artifactId>doubleaforms</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

@@ -1,5 +1,6 @@
 package com.andrew121410.mc.doubleahub.events;
 
+import com.andrew121410.mc.doubleaforms.DoubleAForms;
 import com.andrew121410.mc.doubleahub.DoubleAHub;
 import com.andrew121410.mc.world16utils.chat.Translate;
 import com.andrew121410.mc.world16utils.gui.AdvanceGUIWindow;
@@ -75,7 +76,6 @@ public class OnPlayerInteractEvent implements Listener {
             if (!simpleFormResponse.isCorrect()) return;
             player.performCommand("server " + simpleFormResponse.getClickedButton().getText());
         });
-
-        floodgatePlayer.sendForm(simpleForm);
+        DoubleAForms.getInstance().sendForm(player, simpleForm.build());
     }
 }
