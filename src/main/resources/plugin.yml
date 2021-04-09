@@ -5,3 +5,5 @@ main: com.andrew121410.mc.doubleahub.DoubleAHub
 api-version: 1.16
 depend:
   - WorldGuard
+  - floodgate
+  - World1-6Utils

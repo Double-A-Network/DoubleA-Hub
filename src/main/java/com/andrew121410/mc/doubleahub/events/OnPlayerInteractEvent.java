@@ -39,7 +39,9 @@ public class OnPlayerInteractEvent implements Listener {
 
         if (player.getInventory().getItemInMainHand().getItemMeta() == null) return;
         if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Server")) {
+            event.setCancelled(true);
             if (FloodgateApi.getInstance().isFloodgatePlayer(player.getUniqueId())) {
+//                player.sendMessage(Translate.color("&cNot implemented on bedrock yet..."));
                 theForm(player, FloodgateApi.getInstance().getPlayer(player.getUniqueId()));
             } else if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
                 AdvanceGUIWindow advanceGUIWindow = new AdvanceGUIWindow() {

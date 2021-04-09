@@ -1,8 +1,6 @@
 package com.andrew121410.mc.doubleahub;
 
-import com.andrew121410.mc.doubleahub.events.OnDoubleJump;
-import com.andrew121410.mc.doubleahub.events.OnPlayerInteractEvent;
-import com.andrew121410.mc.doubleahub.events.OnPlayerJoinEvent;
+import com.andrew121410.mc.doubleahub.events.*;
 import com.andrew121410.mc.doubleahub.utils.BungeecordServers;
 import com.andrew121410.mc.doubleahub.utils.SetListMap;
 import com.andrew121410.mc.doubleahub.worldguard.DoubleJumpFlagHandler;
@@ -16,7 +14,7 @@ public class DoubleAHub extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        DoubleJumpFlagHandler.register();
+//        DoubleJumpFlagHandler.register();
     }
 
     @Override
@@ -35,6 +33,8 @@ public class DoubleAHub extends JavaPlugin {
         new OnPlayerJoinEvent(this);
         new OnDoubleJump(this);
         new OnPlayerInteractEvent(this);
+        new OnInventoryClickEvent(this);
+        new OnPlayerDropItemEvent(this);
     }
 
     public SetListMap getSetListMap() {
