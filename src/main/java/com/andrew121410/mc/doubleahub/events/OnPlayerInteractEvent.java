@@ -1,6 +1,5 @@
 package com.andrew121410.mc.doubleahub.events;
 
-import com.andrew121410.mc.doubleaforms.DoubleAForms;
 import com.andrew121410.mc.doubleahub.DoubleAHub;
 import com.andrew121410.mc.world16utils.chat.Translate;
 import com.andrew121410.mc.world16utils.gui.AdvanceGUIWindow;
@@ -42,7 +41,6 @@ public class OnPlayerInteractEvent implements Listener {
         if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Server")) {
             event.setCancelled(true);
             if (FloodgateApi.getInstance().isFloodgatePlayer(player.getUniqueId())) {
-//                player.sendMessage(Translate.color("&cNot implemented on bedrock yet..."));
                 theForm(player, FloodgateApi.getInstance().getPlayer(player.getUniqueId()));
             } else if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
                 AdvanceGUIWindow advanceGUIWindow = new AdvanceGUIWindow() {
@@ -76,6 +74,6 @@ public class OnPlayerInteractEvent implements Listener {
             if (!simpleFormResponse.isCorrect()) return;
             player.performCommand("server " + simpleFormResponse.getClickedButton().getText());
         });
-        DoubleAForms.getInstance().sendForm(player, simpleForm.build());
+        floodgatePlayer.sendForm(simpleForm.build());
     }
 }
