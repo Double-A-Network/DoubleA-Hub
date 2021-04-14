@@ -14,7 +14,7 @@ public class DoubleAHub extends JavaPlugin {
 
     @Override
     public void onLoad() {
-//        DoubleJumpFlagHandler.register();
+        DoubleJumpFlagHandler.register();
     }
 
     @Override
