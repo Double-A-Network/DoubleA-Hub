@@ -22,10 +22,9 @@ public class BungeecordServers implements PluginMessageListener {
         this.bungeecordServers = this.plugin.getSetListMap().getBungeecordServers();
         Bukkit.getMessenger().registerOutgoingPluginChannel(this.plugin, "BungeeCord");
         Bukkit.getMessenger().registerIncomingPluginChannel(this.plugin, "BungeeCord", this);
-        getServers();
     }
 
-    private void getServers() {
+    public void getServers() {
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("GetServers");
         this.plugin.getServer().sendPluginMessage(this.plugin, "BungeeCord", out.toByteArray());

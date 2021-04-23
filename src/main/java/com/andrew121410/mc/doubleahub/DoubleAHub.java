@@ -1,5 +1,6 @@
 package com.andrew121410.mc.doubleahub;
 
+import com.andrew121410.mc.doubleahub.commands.DoubleAHubCMD;
 import com.andrew121410.mc.doubleahub.events.*;
 import com.andrew121410.mc.doubleahub.utils.BungeecordServers;
 import com.andrew121410.mc.doubleahub.utils.SetListMap;
@@ -9,8 +10,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class DoubleAHub extends JavaPlugin {
 
     private static DoubleAHub plugin;
-
     private SetListMap setListMap;
+
+    private BungeecordServers bungeecordServers;
 
     @Override
     public void onLoad() {
@@ -21,7 +23,11 @@ public class DoubleAHub extends JavaPlugin {
     public void onEnable() {
         plugin = this;
         this.setListMap = new SetListMap();
-        new BungeecordServers(this);
+
+        this.bungeecordServers = new BungeecordServers(this);
+        this.bungeecordServers.getServers();
+
+        regCommands();
         regEvents();
     }
 
@@ -29,7 +35,11 @@ public class DoubleAHub extends JavaPlugin {
     public void onDisable() {
     }
 
-    public void regEvents() {
+    private void regCommands() {
+        new DoubleAHubCMD(this);
+    }
+
+    private void regEvents() {
         new OnPlayerJoinEvent(this);
         new OnDoubleJump(this);
         new OnPlayerInteractEvent(this);
@@ -39,6 +49,10 @@ public class DoubleAHub extends JavaPlugin {
 
     public SetListMap getSetListMap() {
         return setListMap;
+    }
+
+    public BungeecordServers getBungeecordServers() {
+        return bungeecordServers;
     }
 
     public static DoubleAHub getPlugin() {

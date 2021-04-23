@@ -7,3 +7,7 @@ depend:
   - WorldGuard
   - World1-6Utils
   - floodgate
+
+commands:
+  doubleahub:
+    permission: doubleahub.use
