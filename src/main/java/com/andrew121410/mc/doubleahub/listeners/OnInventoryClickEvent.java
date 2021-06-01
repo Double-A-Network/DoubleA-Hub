@@ -1,4 +1,4 @@
-package com.andrew121410.mc.doubleahub.events;
+package com.andrew121410.mc.doubleahub.listeners;
 
 import com.andrew121410.mc.doubleahub.DoubleAHub;
 import org.bukkit.event.EventHandler;

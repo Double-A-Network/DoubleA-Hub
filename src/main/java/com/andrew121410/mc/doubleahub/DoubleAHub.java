@@ -1,7 +1,7 @@
 package com.andrew121410.mc.doubleahub;
 
 import com.andrew121410.mc.doubleahub.commands.DoubleAHubCMD;
-import com.andrew121410.mc.doubleahub.events.*;
+import com.andrew121410.mc.doubleahub.listeners.*;
 import com.andrew121410.mc.doubleahub.utils.BungeecordServers;
 import com.andrew121410.mc.doubleahub.utils.SetListMap;
 import com.andrew121410.mc.doubleahub.worldguard.DoubleJumpFlagHandler;
@@ -27,24 +27,25 @@ public class DoubleAHub extends JavaPlugin {
         this.bungeecordServers = new BungeecordServers(this);
         this.bungeecordServers.getServers();
 
-        regCommands();
-        regEvents();
+        registerCommands();
+        registerListeners();
     }
 
     @Override
     public void onDisable() {
     }
 
-    private void regCommands() {
+    private void registerCommands() {
         new DoubleAHubCMD(this);
     }
 
-    private void regEvents() {
+    private void registerListeners() {
         new OnPlayerJoinEvent(this);
         new OnDoubleJump(this);
         new OnPlayerInteractEvent(this);
         new OnInventoryClickEvent(this);
         new OnPlayerDropItemEvent(this);
+        new OnFoodLevelChangeEvent(this);
     }
 
     public SetListMap getSetListMap() {

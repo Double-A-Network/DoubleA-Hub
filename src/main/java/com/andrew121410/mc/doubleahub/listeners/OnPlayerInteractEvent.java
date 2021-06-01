@@ -1,5 +1,6 @@
-package com.andrew121410.mc.doubleahub.events;
+package com.andrew121410.mc.doubleahub.listeners;
 
+import com.andrew121410.mc.doubleaforms.DoubleAForms;
 import com.andrew121410.mc.doubleahub.DoubleAHub;
 import com.andrew121410.mc.world16utils.chat.Translate;
 import com.andrew121410.mc.world16utils.gui.AdvanceGUIWindow;
@@ -17,8 +18,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.geysermc.cumulus.SimpleForm;
 import org.geysermc.cumulus.response.SimpleFormResponse;
-import org.geysermc.floodgate.api.FloodgateApi;
-import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +41,9 @@ public class OnPlayerInteractEvent implements Listener {
         if (player.getInventory().getItemInMainHand().getItemMeta() == null) return;
         if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Server")) {
             event.setCancelled(true);
-            if (FloodgateApi.getInstance().isFloodgatePlayer(player.getUniqueId())) {
-                theForm(player, FloodgateApi.getInstance().getPlayer(player.getUniqueId()));
+            //Bedrock player
+            if (player.getDisplayName().startsWith("+")) {
+                theForm(player);
             } else if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
                 AdvanceGUIWindow advanceGUIWindow = new AdvanceGUIWindow() {
                     @Override
@@ -68,7 +68,7 @@ public class OnPlayerInteractEvent implements Listener {
         }
     }
 
-    private void theForm(Player player, FloodgatePlayer floodgatePlayer) {
+    private void theForm(Player player) {
         SimpleForm.Builder simpleForm = SimpleForm.builder().title("Servers!").content("List of servers!");
         for (String server : this.bungeecordServers) simpleForm.button(server);
         simpleForm.responseHandler((form, data) -> {
@@ -76,7 +76,7 @@ public class OnPlayerInteractEvent implements Listener {
             if (!simpleFormResponse.isCorrect()) return;
             sendPlayerToServer(player, simpleFormResponse.getClickedButton().getText());
         });
-        floodgatePlayer.sendForm(simpleForm.build());
+        DoubleAForms.getInstance().sendForm(player, simpleForm.build());
     }
 
     private void sendPlayerToServer(Player player, String server) {
