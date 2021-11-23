@@ -28,16 +28,16 @@ public class VpnManager {
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
             VpnAPIResponse vpnAPIResponse = getVpnAPIResponse(player);
             if (vpnAPIResponse == null) {
-                consumer.accept(null, null); //We are just going to assume they have a VPN.
+                this.plugin.getServer().getScheduler().runTask(this.plugin, () -> consumer.accept(null, null));
                 plugin.getLogger().log(Level.SEVERE, "vpnAPIResponse was null.");
                 return;
             }
-            String whatWasItFlaggedFor = null;
+            String wasFlaggedFor = null;
             for (Map.Entry<String, Boolean> stringBooleanEntry : vpnAPIResponse.getSecurity().entrySet()) {
-                if (stringBooleanEntry.getValue()) whatWasItFlaggedFor = stringBooleanEntry.getKey();
+                if (stringBooleanEntry.getValue()) wasFlaggedFor = stringBooleanEntry.getKey();
             }
-            String finalWhatWasItFlaggedFor = whatWasItFlaggedFor; //Lambda moment
-            plugin.getServer().getScheduler().runTask(plugin, () -> consumer.accept(finalWhatWasItFlaggedFor, vpnAPIResponse));
+            String finalWasFlaggedFor = wasFlaggedFor; //Lambda moment
+            plugin.getServer().getScheduler().runTask(plugin, () -> consumer.accept(finalWasFlaggedFor, vpnAPIResponse));
         });
     }
 

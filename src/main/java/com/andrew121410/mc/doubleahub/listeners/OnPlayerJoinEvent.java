@@ -45,19 +45,23 @@ public class OnPlayerJoinEvent implements Listener {
         Player player = event.getPlayer();
         String ipAddress = player.getAddress().getAddress().getHostAddress();
 
+        //No need to use another API request
         if (this.vpnAddressesCache.contains(ipAddress)) {
             player.kickPlayer("Please disable your vpn... [cached]");
             return;
         }
 
+        //No need to use another API request
+        if (this.validAddressesCache.contains(ipAddress)) {
+            return;
+        }
+
         this.vpnManager.doesPlayerHaveVPN(event.getPlayer(), (flaggedFor, vpnAPIResponse) -> {
             if (flaggedFor == null && vpnAPIResponse != null) {
-                //Ran if not a vpn
-                if (!this.validAddressesCache.contains(ipAddress)) {
-                    this.validAddressesCache.add(ipAddress);
-                }
+                //Ran if not using a VPN
+                this.validAddressesCache.add(ipAddress);
             } else if (flaggedFor != null && vpnAPIResponse != null) {
-                //Ran if is a vpn
+                //Ran if player is using a VPN
                 player.kickPlayer("Please disable your vpn...");
                 this.plugin.getSetListMap().getVpnAddressesCache().add(player.getAddress().getAddress().getHostAddress());
 
