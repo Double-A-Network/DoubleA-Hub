@@ -2,11 +2,12 @@ name: DoubleA-Hub
 version: 1.0
 author: Andrew121410
 main: com.andrew121410.mc.doubleahub.DoubleAHub
-api-version: 1.16
+api-version: 1.17
 depend:
   - WorldGuard
   - World1-6Utils
   - floodgate
+  - DiscordSRV
 
 commands:
   doubleahub:

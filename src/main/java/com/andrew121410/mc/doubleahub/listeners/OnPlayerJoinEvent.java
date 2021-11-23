@@ -1,26 +1,81 @@
 package com.andrew121410.mc.doubleahub.listeners;
 
 import com.andrew121410.mc.doubleahub.DoubleAHub;
+import com.andrew121410.mc.doubleahub.vpn.VpnManager;
 import com.andrew121410.mc.world16utils.chat.Translate;
 import com.andrew121410.mc.world16utils.utils.InventoryUtils;
+import github.scarsz.discordsrv.dependencies.jda.api.EmbedBuilder;
+import github.scarsz.discordsrv.dependencies.jda.api.entities.TextChannel;
+import github.scarsz.discordsrv.util.DiscordUtil;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.List;
+
 public class OnPlayerJoinEvent implements Listener {
 
+    private final List<String> vpnAddressesCache;
+    private final List<String> validAddressesCache;
+
+
     private DoubleAHub plugin;
+    private VpnManager vpnManager;
 
     public OnPlayerJoinEvent(DoubleAHub plugin) {
         this.plugin = plugin;
+
+        this.vpnAddressesCache = this.plugin.getSetListMap().getVpnAddressesCache();
+        this.validAddressesCache = this.plugin.getSetListMap().getValidAddressesCache();
+
+        this.vpnManager = this.plugin.getVpnManager();
         this.plugin.getServer().getPluginManager().registerEvents(this, this.plugin);
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onJoinLow(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        String ipAddress = player.getAddress().getAddress().getHostAddress();
+
+        if (this.vpnAddressesCache.contains(ipAddress)) {
+            player.kickPlayer("Please disable your vpn... [cached]");
+            return;
+        }
+
+        this.vpnManager.doesPlayerHaveVPN(event.getPlayer(), (flaggedFor, vpnAPIResponse) -> {
+            if (flaggedFor == null && vpnAPIResponse != null) {
+                //Ran if not a vpn
+                if (!this.validAddressesCache.contains(ipAddress)) {
+                    this.validAddressesCache.add(ipAddress);
+                }
+            } else if (flaggedFor != null && vpnAPIResponse != null) {
+                //Ran if is a vpn
+                player.kickPlayer("Please disable your vpn...");
+                this.plugin.getSetListMap().getVpnAddressesCache().add(player.getAddress().getAddress().getHostAddress());
+
+                TextChannel textChannel = DiscordUtil.getJda().getTextChannelById(912807023756861460L);
+                if (textChannel == null) return;
+
+                EmbedBuilder embedBuilder = new EmbedBuilder()
+                        .setTitle(player.getDisplayName() + " Blocked!")
+                        .setThumbnail("https://crafatar.com/avatars/" + player.getUniqueId() + ".png")
+                        .setDescription(player.getDisplayName() + "'s connection was blocked as it was flagged as a " + flaggedFor)
+                        .addField("\nInformation:", vpnAPIResponse.toString(), false)
+                        .setFooter("Double-A-Hub - vpnapi.io");
+
+                textChannel.sendMessageEmbeds(embedBuilder.build()).queue();
+            } else {
+                player.kickPlayer("Couldn't validate your IP Address");
+            }
+        });
     }
 
     @EventHandler
