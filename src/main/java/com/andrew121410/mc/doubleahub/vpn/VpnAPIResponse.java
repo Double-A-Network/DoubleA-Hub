@@ -2,6 +2,8 @@ package com.andrew121410.mc.doubleahub.vpn;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Map;
 import java.util.Objects;
@@ -54,13 +56,24 @@ public class VpnAPIResponse {
         this.network = network;
     }
 
+    public String toJsonPrettyPrint() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
-        return "IP: " + this.ip +
-                "\n" +
-                "Location Data: " + this.location +
-                "\n" +
-                "Network Data: " + this.network;
+        return "VpnAPIResponse{" +
+                "ip='" + ip + '\'' +
+                ", security=" + security +
+                ", location=" + location +
+                ", network=" + network +
+                '}';
     }
 
     @Override

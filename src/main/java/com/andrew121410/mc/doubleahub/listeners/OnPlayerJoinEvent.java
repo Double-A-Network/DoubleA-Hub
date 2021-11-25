@@ -63,17 +63,17 @@ public class OnPlayerJoinEvent implements Listener {
             } else if (flaggedFor != null && vpnAPIResponse != null) {
                 //Ran if player is using a VPN
                 player.kickPlayer("Please disable your vpn...");
-                this.plugin.getSetListMap().getVpnAddressesCache().add(player.getAddress().getAddress().getHostAddress());
+                this.plugin.getSetListMap().getVpnAddressesCache().add(ipAddress);
 
                 TextChannel textChannel = DiscordUtil.getJda().getTextChannelById(912807023756861460L);
                 if (textChannel == null) return;
 
                 EmbedBuilder embedBuilder = new EmbedBuilder()
-                        .setTitle(player.getDisplayName() + " Blocked!")
+                        .setTitle(player.getDisplayName() + " Blocked!", "https://minecraftuuid.com/?search=" + player.getUniqueId())
                         .setThumbnail("https://crafatar.com/avatars/" + player.getUniqueId() + ".png")
                         .setDescription(player.getDisplayName() + "'s connection was blocked as it was flagged as a " + flaggedFor)
-                        .addField("\nInformation:", vpnAPIResponse.toString(), false)
-                        .setFooter("Double-A-Hub - vpnapi.io");
+                        .addField("IP Information:", "```json\n" + vpnAPIResponse.toJsonPrettyPrint() + "\n```", false)
+                        .setFooter("Double-A-Hub - (vpnapi.io)");
 
                 textChannel.sendMessageEmbeds(embedBuilder.build()).queue();
             } else {
