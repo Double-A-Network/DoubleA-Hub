@@ -2,7 +2,6 @@ package com.andrew121410.mc.doubleahub.vpn;
 
 import com.andrew121410.mc.doubleahub.DoubleAHub;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.bukkit.entity.Player;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -11,12 +10,10 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.logging.Level;
 
 public class VpnManager {
 
-    private DoubleAHub plugin;
-
+    private final DoubleAHub plugin;
     private final String vpnKey;
 
     public VpnManager(DoubleAHub plugin) {
@@ -24,31 +21,28 @@ public class VpnManager {
         this.vpnKey = this.plugin.getConfig().getString("VPN-API");
     }
 
-    public void doesPlayerHaveVPN(Player player, BiConsumer<String, VpnAPIResponse> consumer) {
-        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
-            VpnAPIResponse vpnAPIResponse = getVpnAPIResponse(player);
-            if (vpnAPIResponse == null) {
-                this.plugin.getServer().getScheduler().runTask(this.plugin, () -> consumer.accept(null, null));
-                plugin.getLogger().log(Level.SEVERE, "vpnAPIResponse was null.");
-                return;
-            }
+    public void isVPN(String ipAddress, BiConsumer<String, VpnAPIResponse> consumer) {
+        this.plugin.getServer().getScheduler().runTaskAsynchronously(this.plugin, () -> {
+            VpnAPIResponse vpnAPIResponse = getVpnAPIResponse(ipAddress);
             String wasFlaggedFor = null;
-            for (Map.Entry<String, Boolean> stringBooleanEntry : vpnAPIResponse.getSecurity().entrySet()) {
-                if (stringBooleanEntry.getValue()) wasFlaggedFor = stringBooleanEntry.getKey();
+
+            if (vpnAPIResponse != null) {
+                for (Map.Entry<String, Boolean> stringBooleanEntry : vpnAPIResponse.getSecurity().entrySet()) {
+                    if (stringBooleanEntry.getValue()) wasFlaggedFor = stringBooleanEntry.getKey();
+                }
             }
             String finalWasFlaggedFor = wasFlaggedFor; //Lambda moment
-            plugin.getServer().getScheduler().runTask(plugin, () -> consumer.accept(finalWasFlaggedFor, vpnAPIResponse));
+
+            this.plugin.getServer().getScheduler().runTask(this.plugin, () -> consumer.accept(finalWasFlaggedFor, vpnAPIResponse));
         });
     }
 
-    private VpnAPIResponse getVpnAPIResponse(Player player) {
-        if (player.getAddress() == null) return null;
-
+    private VpnAPIResponse getVpnAPIResponse(String ipAddress) {
         try {
             HttpClient client = HttpClient.newHttpClient();
 
             HttpRequest httpRequest = HttpRequest.newBuilder()
-                    .uri(URI.create("https://vpnapi.io/api/" + player.getAddress().getAddress().getHostAddress() + "?key=" + this.vpnKey))
+                    .uri(URI.create("https://vpnapi.io/api/" + ipAddress + "?key=" + this.vpnKey))
                     .timeout(Duration.ofMinutes(1))
                     .header("Content-Type", "application/json")
                     .GET()

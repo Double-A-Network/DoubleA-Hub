@@ -26,9 +26,8 @@ public class OnPlayerJoinEvent implements Listener {
     private final List<String> vpnAddressesCache;
     private final List<String> validAddressesCache;
 
-
-    private DoubleAHub plugin;
-    private VpnManager vpnManager;
+    private final DoubleAHub plugin;
+    private final VpnManager vpnManager;
 
     public OnPlayerJoinEvent(DoubleAHub plugin) {
         this.plugin = plugin;
@@ -43,6 +42,8 @@ public class OnPlayerJoinEvent implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onJoinLow(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+
+        if (player.getAddress() == null) throw new NullPointerException("player.getAddress() was null?");
         String ipAddress = player.getAddress().getAddress().getHostAddress();
 
         //No need to use another API request
@@ -56,12 +57,12 @@ public class OnPlayerJoinEvent implements Listener {
             return;
         }
 
-        this.vpnManager.doesPlayerHaveVPN(event.getPlayer(), (flaggedFor, vpnAPIResponse) -> {
+        this.vpnManager.isVPN(ipAddress, (flaggedFor, vpnAPIResponse) -> {
             if (flaggedFor == null && vpnAPIResponse != null) {
                 //Ran if not using a VPN
                 this.validAddressesCache.add(ipAddress);
             } else if (flaggedFor != null && vpnAPIResponse != null) {
-                //Ran if player is using a VPN
+                //Ran if using a VPN
                 player.kickPlayer("Please disable your vpn...");
                 this.plugin.getSetListMap().getVpnAddressesCache().add(ipAddress);
 
