@@ -48,6 +48,7 @@ public class DoubleAHub extends JavaPlugin {
     }
 
     private void registerListeners() {
+        new OnAsyncPlayerPreLoginEvent(this);
         new OnPlayerJoinEvent(this);
         new OnDoubleJump(this);
         new OnPlayerInteractEvent(this);
