@@ -3,9 +3,6 @@ package com.andrew121410.mc.doubleahub.listeners;
 import com.andrew121410.mc.doubleahub.DoubleAHub;
 import com.andrew121410.mc.doubleahub.vpn.VpnManager;
 import com.andrew121410.mc.doubleahub.vpn.VpnResponse;
-import github.scarsz.discordsrv.dependencies.jda.api.EmbedBuilder;
-import github.scarsz.discordsrv.dependencies.jda.api.entities.TextChannel;
-import github.scarsz.discordsrv.util.DiscordUtil;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
@@ -61,17 +58,17 @@ public class OnAsyncPlayerPreLoginEvent implements Listener {
             event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "Please turn off your VPN");
             this.plugin.getSetListMap().getVpnAddressesCache().add(ipAddress);
 
-            TextChannel textChannel = DiscordUtil.getJda().getTextChannelById(912807023756861460L);
-            if (textChannel == null) return;
-
-            EmbedBuilder embedBuilder = new EmbedBuilder()
-                    .setTitle(event.getName() + " Blocked!", "https://minecraftuuid.com/?search=" + event.getUniqueId())
-                    .setThumbnail("https://crafatar.com/avatars/" + event.getUniqueId() + ".png")
-                    .setDescription(event.getName() + "'s connection was blocked as it was flagged as a " + vpnResponse.getWasFlaggedFor())
-                    .addField("IP Information:", "```json\n" + vpnResponse.getVpnAPIResponse().toJsonPrettyPrint() + "\n```", false)
-                    .setFooter("Double-A-Hub - (vpnapi.io)");
-
-            textChannel.sendMessageEmbeds(embedBuilder.build()).queue();
+//            TextChannel textChannel = DiscordUtil.getJda().getTextChannelById(912807023756861460L);
+//            if (textChannel == null) return;
+//
+//            EmbedBuilder embedBuilder = new EmbedBuilder()
+//                    .setTitle(event.getName() + " Blocked!", "https://minecraftuuid.com/?search=" + event.getUniqueId())
+//                    .setThumbnail("https://crafatar.com/avatars/" + event.getUniqueId() + ".png")
+//                    .setDescription(event.getName() + "'s connection was blocked as it was flagged as a " + vpnResponse.getWasFlaggedFor())
+//                    .addField("IP Information:", "```json\n" + vpnResponse.getVpnAPIResponse().toJsonPrettyPrint() + "\n```", false)
+//                    .setFooter("Double-A-Hub - (vpnapi.io)");
+//
+//            textChannel.sendMessageEmbeds(embedBuilder.build()).queue();
         }
     }
 }

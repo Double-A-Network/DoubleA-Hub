@@ -7,7 +7,6 @@ depend:
   - WorldGuard
   - World1-6Utils
   - floodgate
-  - DiscordSRV
 
 commands:
   doubleahub:
