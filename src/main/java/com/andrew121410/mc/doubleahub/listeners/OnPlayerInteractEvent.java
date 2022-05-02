@@ -9,6 +9,7 @@ import com.andrew121410.mc.world16utils.utils.InventoryUtils;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -56,6 +57,8 @@ public class OnPlayerInteractEvent implements Listener {
                             slot = slot + 2;
                         }
                         this.update(guiButtons, Translate.color("&bServers!"), guiSlots);
+
+                        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 1f);
                     }
 
                     @Override
