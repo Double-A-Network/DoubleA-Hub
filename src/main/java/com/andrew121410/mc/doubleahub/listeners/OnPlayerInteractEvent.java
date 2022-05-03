@@ -51,12 +51,20 @@ public class OnPlayerInteractEvent implements Listener {
                     public void onCreate(Player player) {
                         List<GUIButton> guiButtons = new ArrayList<>();
                         int guiSlots = bungeecordServers.size() + (9 - (bungeecordServers.size() % 9));
-                        int slot = 2;
+
+                        int slot = switch (bungeecordServers.size()) {
+                            case 3 -> 3;
+                            case 2 -> 4;
+                            case 1 -> 5;
+                            default -> 2;
+                        };
+
                         for (String server : bungeecordServers) {
                             guiButtons.add(new ClickEventButton(slot - 1, InventoryUtils.createItem(Material.ENCHANTED_BOOK, 1, server, "Click me to join the server!"), guiClickEvent -> sendPlayerToServer(player, server)));
                             slot = slot + 2;
                         }
-                        this.update(guiButtons, Translate.color("&bServers!"), guiSlots);
+
+                        this.update(guiButtons, Translate.color("Servers"), guiSlots);
 
                         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 1f);
                     }

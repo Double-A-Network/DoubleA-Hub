@@ -46,8 +46,8 @@ public class OnPlayerJoinEvent implements Listener {
         }.runTaskLater(this.plugin, 20L);
 
         player.getInventory().clear();
-        player.getInventory().setItem(4, InventoryUtils.createItem(Material.COMPASS, 1, Translate.color("&bServers"), "Click me to show a list of servers!"));
-        player.getInventory().setHeldItemSlot(4);
+        player.getInventory().setItem(0, InventoryUtils.createItem(Material.COMPASS, 1, Translate.color("&bServers"), "Click me to show a list of servers!"));
+        player.getInventory().setHeldItemSlot(0);
         player.performCommand("spawn");
         player.sendMessage(Translate.color("&2Welcome to the &6Double-A Network!"));
         player.sendMessage(Translate.color("&5Discord: &9https://discord.gg/pbrueZB"));
