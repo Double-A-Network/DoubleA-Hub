@@ -5,6 +5,7 @@ import com.andrew121410.mc.world16utils.chat.Translate;
 import com.andrew121410.mc.world16utils.gui.AdvanceGUIWindow;
 import com.andrew121410.mc.world16utils.gui.buttons.GUIButton;
 import com.andrew121410.mc.world16utils.gui.buttons.defaults.ClickEventButton;
+import com.andrew121410.mc.world16utils.gui.buttons.defaults.NoEventButton;
 import com.andrew121410.mc.world16utils.utils.InventoryUtils;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
@@ -62,6 +63,13 @@ public class OnPlayerInteractEvent implements Listener {
                         for (String server : bungeecordServers) {
                             guiButtons.add(new ClickEventButton(slot - 1, InventoryUtils.createItem(Material.ENCHANTED_BOOK, 1, server, "Click me to join the server!"), guiClickEvent -> sendPlayerToServer(player, server)));
                             slot = slot + 2;
+                        }
+
+                        List<Integer> integers = guiButtons.stream().map(GUIButton::getSlot).toList();
+                        for (int i = 0; i < 9; i++) {
+                            if (!integers.contains(i)) {
+                                guiButtons.add(new NoEventButton(i, InventoryUtils.createItem(Material.GRAY_STAINED_GLASS_PANE, 1, " ")));
+                            }
                         }
 
                         this.update(guiButtons, Translate.color("Servers"), guiSlots);
