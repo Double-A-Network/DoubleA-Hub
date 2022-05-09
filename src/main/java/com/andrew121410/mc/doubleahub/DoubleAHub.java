@@ -55,6 +55,7 @@ public class DoubleAHub extends JavaPlugin {
         new OnInventoryClickEvent(this);
         new OnPlayerDropItemEvent(this);
         new OnFoodLevelChangeEvent(this);
+        new OnPlayerChangedWorldEvent(this);
     }
 
     public SetListMap getSetListMap() {
