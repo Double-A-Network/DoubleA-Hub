@@ -24,11 +24,11 @@ public class OnPlayerChangedWorldEvent implements Listener {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "invsave " + player.getName() + " 1 -s");
             player.setGameMode(GameMode.CREATIVE);
             player.getInventory().clear();
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "invload a " + player.getName() + " 2");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "invload " + player.getName() + " " + player.getName() + " 2");
         } else if (player.getWorld().getName().equalsIgnoreCase("world")) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "invsave " + player.getName() + " 2 -s");
             player.setGameMode(GameMode.SURVIVAL);
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "invload a " + player.getName() + " 1");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "invload " + player.getName() + " " + player.getName() + " 1");
         }
     }
 }
