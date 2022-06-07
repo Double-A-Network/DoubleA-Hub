@@ -1,6 +1,7 @@
 package com.andrew121410.mc.doubleahub.listeners;
 
 import com.andrew121410.mc.doubleahub.DoubleAHub;
+import com.andrew121410.mc.doubleahub.utils.ServerCompassSelector;
 import com.andrew121410.mc.world16utils.chat.Translate;
 import com.andrew121410.mc.world16utils.utils.InventoryUtils;
 import org.bukkit.Color;
@@ -46,8 +47,7 @@ public class OnPlayerJoinEvent implements Listener {
         }.runTaskLater(this.plugin, 20L);
 
         player.getInventory().clear();
-        player.getInventory().setItem(0, InventoryUtils.createItem(Material.COMPASS, 1, Translate.color("&bServers"), "Click me to show a list of servers!"));
-        player.getInventory().setHeldItemSlot(0);
+        ServerCompassSelector.addItemToInventory(player);
         player.performCommand("spawn");
         player.sendMessage(Translate.color("&2Welcome to the &6Double-A Network!"));
         player.sendMessage(Translate.color("&5Discord: &9https://discord.gg/pbrueZB"));
