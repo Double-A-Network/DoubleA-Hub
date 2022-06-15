@@ -16,6 +16,10 @@ public class DoubleAHub extends JavaPlugin {
     private BungeecordServers bungeecordServers;
     private VpnManager vpnManager;
 
+    public static DoubleAHub getPlugin() {
+        return plugin;
+    }
+
     @Override
     public void onLoad() {
         DoubleJumpFlagHandler.register();
@@ -68,9 +72,5 @@ public class DoubleAHub extends JavaPlugin {
 
     public VpnManager getVpnManager() {
         return vpnManager;
-    }
-
-    public static DoubleAHub getPlugin() {
-        return plugin;
     }
 }

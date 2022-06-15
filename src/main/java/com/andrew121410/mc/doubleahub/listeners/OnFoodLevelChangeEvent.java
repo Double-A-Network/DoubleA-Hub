@@ -7,7 +7,7 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 public class OnFoodLevelChangeEvent implements Listener {
 
-    private DoubleAHub plugin;
+    private final DoubleAHub plugin;
 
     public OnFoodLevelChangeEvent(DoubleAHub plugin) {
         this.plugin = plugin;

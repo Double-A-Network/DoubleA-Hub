@@ -2,6 +2,7 @@ package com.andrew121410.mc.doubleahub.listeners;
 
 import com.andrew121410.mc.doubleahub.DoubleAHub;
 import com.andrew121410.mc.doubleahub.utils.ServerCompassSelector;
+import com.andrew121410.mc.world16utils.chat.Translate;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,6 +27,7 @@ public class OnPlayerDropItemEvent implements Listener {
             event.setCancelled(true);
         } else if (player.isOp() && ServerCompassSelector.isServerCompassSelector(item.getItemStack())) {
             item.remove();
+            player.sendMessage(Translate.color("&aYou have removed the server compass."));
         }
     }
 }

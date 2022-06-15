@@ -17,7 +17,7 @@ import org.bukkit.event.player.PlayerToggleFlightEvent;
 
 public class OnDoubleJump implements Listener {
 
-    private DoubleAHub plugin;
+    private final DoubleAHub plugin;
 
     public OnDoubleJump(DoubleAHub plugin) {
         this.plugin = plugin;

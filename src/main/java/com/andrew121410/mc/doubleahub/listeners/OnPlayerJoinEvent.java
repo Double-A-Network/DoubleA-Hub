@@ -3,17 +3,14 @@ package com.andrew121410.mc.doubleahub.listeners;
 import com.andrew121410.mc.doubleahub.DoubleAHub;
 import com.andrew121410.mc.doubleahub.utils.ServerCompassSelector;
 import com.andrew121410.mc.world16utils.chat.Translate;
-import com.andrew121410.mc.world16utils.utils.InventoryUtils;
-import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
-import org.bukkit.Material;
-import org.bukkit.entity.Firework;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.meta.FireworkMeta;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class OnPlayerJoinEvent implements Listener {
 
@@ -28,28 +25,20 @@ public class OnPlayerJoinEvent implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        //Firework
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                Firework firework = player.getWorld().spawn(player.getLocation(), Firework.class);
-                FireworkMeta fireworkMeta = firework.getFireworkMeta();
-                fireworkMeta.addEffect(FireworkEffect.builder()
-                        .flicker(false)
-                        .trail(true)
-                        .with(FireworkEffect.Type.CREEPER)
-                        .withColor(Color.GREEN)
-                        .withFade(Color.BLUE)
-                        .build());
-                fireworkMeta.setPower(3);
-                firework.setFireworkMeta(fireworkMeta);
-            }
-        }.runTaskLater(this.plugin, 20L);
+        // Clear the chat for the player
+        for (int i = 0; i < 100; i++) player.sendMessage("");
+
+
+        // Send welcome message
+        player.sendMessage(Translate.chat("&7&m-----------------------------------------------------"));
+        player.sendMessage(Component.text("Welcome to the Double-A Network!").color(TextColor.fromHexString("#ffbf00"))
+                .append(Component.newline())
+                .append(Component.text("Discord: ").color(TextColor.fromHexString("#7289da")))
+                .append(Component.text("https://discord.gg/pbrueZB").color(TextColor.fromHexString("#551A8B")).decoration(TextDecoration.UNDERLINED, true).clickEvent(ClickEvent.openUrl("https://discord.gg/pbrueZB"))));
+        player.sendMessage(Translate.chat("&7&m-----------------------------------------------------"));
 
         player.getInventory().clear();
         ServerCompassSelector.addItemToInventory(player);
         player.performCommand("spawn");
-        player.sendMessage(Translate.color("&2Welcome to the &6Double-A Network!"));
-        player.sendMessage(Translate.color("&5Discord: &9https://discord.gg/pbrueZB"));
     }
 }

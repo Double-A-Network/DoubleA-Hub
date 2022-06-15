@@ -14,9 +14,13 @@ public class ServerCompassSelector {
     }
 
     public static boolean isServerCompassSelector(ItemStack itemStack) {
-        if (itemStack.getItemMeta() != null) {
+        if (itemStack != null && itemStack.getItemMeta() != null) {
             return itemStack.getItemMeta().getDisplayName().contains("Server");
         }
         return false;
+    }
+
+    public static void removeFromInventory(Player player) {
+        player.getInventory().remove(Material.COMPASS);
     }
 }

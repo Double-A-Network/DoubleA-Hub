@@ -26,8 +26,8 @@ import java.util.List;
 
 public class OnPlayerInteractEvent implements Listener {
 
-    private DoubleAHub plugin;
-    private List<String> bungeecordServers;
+    private final DoubleAHub plugin;
+    private final List<String> bungeecordServers;
 
     public OnPlayerInteractEvent(DoubleAHub plugin) {
         this.plugin = plugin;

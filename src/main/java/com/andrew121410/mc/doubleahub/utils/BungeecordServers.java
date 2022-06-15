@@ -14,8 +14,8 @@ import java.util.List;
 
 public class BungeecordServers implements PluginMessageListener {
 
-    private DoubleAHub plugin;
-    private List<String> bungeecordServers;
+    private final DoubleAHub plugin;
+    private final List<String> bungeecordServers;
 
     public BungeecordServers(DoubleAHub plugin) {
         this.plugin = plugin;
