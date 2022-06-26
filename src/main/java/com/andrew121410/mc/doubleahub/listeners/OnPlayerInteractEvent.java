@@ -2,7 +2,7 @@ package com.andrew121410.mc.doubleahub.listeners;
 
 import com.andrew121410.mc.doubleahub.DoubleAHub;
 import com.andrew121410.mc.world16utils.chat.Translate;
-import com.andrew121410.mc.world16utils.gui.AdvanceGUIWindow;
+import com.andrew121410.mc.world16utils.gui.GUIWindow;
 import com.andrew121410.mc.world16utils.gui.buttons.GUIButton;
 import com.andrew121410.mc.world16utils.gui.buttons.defaults.ClickEventButton;
 import com.andrew121410.mc.world16utils.gui.buttons.defaults.NoEventButton;
@@ -47,7 +47,7 @@ public class OnPlayerInteractEvent implements Listener {
             if (FloodgateApi.getInstance().isFloodgatePlayer(player.getUniqueId())) {
                 sendServersForm(player);
             } else if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
-                AdvanceGUIWindow advanceGUIWindow = new AdvanceGUIWindow() {
+                GUIWindow guiWindow = new GUIWindow() {
                     @Override
                     public void onCreate(Player player) {
                         List<GUIButton> guiButtons = new ArrayList<>();
@@ -82,7 +82,7 @@ public class OnPlayerInteractEvent implements Listener {
 
                     }
                 };
-                advanceGUIWindow.open(player);
+                guiWindow.open(player);
             }
         }
     }
