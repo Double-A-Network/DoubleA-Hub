@@ -6,6 +6,7 @@ import com.andrew121410.mc.doubleahub.utils.BungeecordServers;
 import com.andrew121410.mc.doubleahub.utils.SetListMap;
 import com.andrew121410.mc.doubleahub.vpn.VpnManager;
 import com.andrew121410.mc.doubleahub.worldguard.DoubleJumpFlagHandler;
+import com.andrew121410.mc.world16utils.updater.UpdateManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class DoubleAHub extends JavaPlugin {
@@ -41,6 +42,8 @@ public class DoubleAHub extends JavaPlugin {
 
         registerCommands();
         registerListeners();
+
+        UpdateManager.registerUpdater(this, new com.andrew121410.mc.doubleahub.Updater(this));
     }
 
     @Override

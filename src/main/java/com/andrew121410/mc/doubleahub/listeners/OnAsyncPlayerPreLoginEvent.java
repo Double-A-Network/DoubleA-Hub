@@ -11,8 +11,8 @@ import java.util.List;
 
 public class OnAsyncPlayerPreLoginEvent implements Listener {
 
-    private final List<String> vpnAddressesCache;
-    private final List<String> validAddressesCache;
+    private final List<String> blockedVPNIPAddresses;
+    private final List<String> validVPNIPAddresses;
 
     private final DoubleAHub plugin;
     private final VpnManager vpnManager;
@@ -21,8 +21,8 @@ public class OnAsyncPlayerPreLoginEvent implements Listener {
         this.plugin = plugin;
         this.vpnManager = this.plugin.getVpnManager();
 
-        this.vpnAddressesCache = this.plugin.getSetListMap().getVpnAddressesCache();
-        this.validAddressesCache = this.plugin.getSetListMap().getValidAddressesCache();
+        this.blockedVPNIPAddresses = this.plugin.getSetListMap().getBlockedVPNIPAddresses();
+        this.validVPNIPAddresses = this.plugin.getSetListMap().getValidVPNIPAddresses();
 
         this.plugin.getServer().getPluginManager().registerEvents(this, this.plugin);
     }
@@ -31,14 +31,14 @@ public class OnAsyncPlayerPreLoginEvent implements Listener {
     public void fuckBots(AsyncPlayerPreLoginEvent event) {
         String ipAddress = event.getAddress().getHostAddress();
 
-        //No need to use another API request
-        if (this.vpnAddressesCache.contains(ipAddress)) {
+        // No need to use another API request
+        if (this.blockedVPNIPAddresses.contains(ipAddress)) {
             event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "Please turn off your VPN [cached]");
             return;
         }
 
-        //No need to use another API request
-        if (this.validAddressesCache.contains(ipAddress)) {
+        // No need to use another API request
+        if (this.validVPNIPAddresses.contains(ipAddress)) {
             event.allow();
             return;
         }
@@ -46,17 +46,18 @@ public class OnAsyncPlayerPreLoginEvent implements Listener {
         VpnResponse vpnResponse = this.vpnManager.isVPNBlocking(ipAddress);
 
         if (vpnResponse.getVpnAPIResponse() == null) {
-            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "Couldn't validate your IP Address");
+            event.allow(); // We shouldn't disallow login just because the API is down.
+//            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "Couldn't validate your IP Address");
             return;
         }
 
         if (vpnResponse.getWasFlaggedFor() == null) {
-            //Ran if not using a VPN
+            // Ran If not using a VPN
             event.allow();
         } else {
             //Ran if using a VPN
             event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "Please turn off your VPN");
-            this.plugin.getSetListMap().getVpnAddressesCache().add(ipAddress);
+            this.plugin.getSetListMap().getBlockedVPNIPAddresses().add(ipAddress);
 
 //            TextChannel textChannel = DiscordUtil.getJda().getTextChannelById(912807023756861460L);
 //            if (textChannel == null) return;

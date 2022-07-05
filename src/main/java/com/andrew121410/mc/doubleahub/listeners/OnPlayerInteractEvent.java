@@ -3,7 +3,7 @@ package com.andrew121410.mc.doubleahub.listeners;
 import com.andrew121410.mc.doubleahub.DoubleAHub;
 import com.andrew121410.mc.world16utils.chat.Translate;
 import com.andrew121410.mc.world16utils.gui.GUIWindow;
-import com.andrew121410.mc.world16utils.gui.buttons.GUIButton;
+import com.andrew121410.mc.world16utils.gui.buttons.AbstractGUIButton;
 import com.andrew121410.mc.world16utils.gui.buttons.defaults.ClickEventButton;
 import com.andrew121410.mc.world16utils.gui.buttons.defaults.NoEventButton;
 import com.andrew121410.mc.world16utils.utils.InventoryUtils;
@@ -50,7 +50,7 @@ public class OnPlayerInteractEvent implements Listener {
                 GUIWindow guiWindow = new GUIWindow() {
                     @Override
                     public void onCreate(Player player) {
-                        List<GUIButton> guiButtons = new ArrayList<>();
+                        List<AbstractGUIButton> guiButtons = new ArrayList<>();
                         int guiSlots = bungeecordServers.size() + (9 - (bungeecordServers.size() % 9));
 
                         int slot = switch (bungeecordServers.size()) {
@@ -65,7 +65,7 @@ public class OnPlayerInteractEvent implements Listener {
                             slot = slot + 2;
                         }
 
-                        List<Integer> integers = guiButtons.stream().map(GUIButton::getSlot).toList();
+                        List<Integer> integers = guiButtons.stream().map(AbstractGUIButton::getSlot).toList();
                         for (int i = 0; i < 9; i++) {
                             if (!integers.contains(i)) {
                                 guiButtons.add(new NoEventButton(i, InventoryUtils.createItem(Material.GRAY_STAINED_GLASS_PANE, 1, " ")));

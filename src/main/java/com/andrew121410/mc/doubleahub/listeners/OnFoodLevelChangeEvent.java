@@ -16,9 +16,6 @@ public class OnFoodLevelChangeEvent implements Listener {
 
     @EventHandler
     public void onFoodLevelChange(FoodLevelChangeEvent event) {
-        if (event.getFoodLevel() < 20) {
-            //We could just use event.setCancelled(); but if some how the food level is already below 20 then it would stay that which is not what we want.
-            event.setFoodLevel(20);
-        }
+        if (event.getFoodLevel() < 20) event.setFoodLevel(20);
     }
 }

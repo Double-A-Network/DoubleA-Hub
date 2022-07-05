@@ -9,14 +9,14 @@ public class SetListMap {
     private final List<UUID> noDoubleJumpUUID;
     private final List<String> bungeecordServers;
 
-    private final List<String> vpnAddressesCache;
-    private final List<String> validAddressesCache;
+    private final List<String> blockedVPNIPAddresses;
+    private final List<String> validVPNIPAddresses;
 
     public SetListMap() {
         this.noDoubleJumpUUID = new ArrayList<>();
         this.bungeecordServers = new ArrayList<>();
-        this.vpnAddressesCache = new ArrayList<>();
-        this.validAddressesCache = new ArrayList<>();
+        this.blockedVPNIPAddresses = new ArrayList<>();
+        this.validVPNIPAddresses = new ArrayList<>();
     }
 
     public List<UUID> getNoDoubleJumpUUID() {
@@ -27,11 +27,11 @@ public class SetListMap {
         return bungeecordServers;
     }
 
-    public List<String> getVpnAddressesCache() {
-        return vpnAddressesCache;
+    public List<String> getBlockedVPNIPAddresses() {
+        return blockedVPNIPAddresses;
     }
 
-    public List<String> getValidAddressesCache() {
-        return validAddressesCache;
+    public List<String> getValidVPNIPAddresses() {
+        return validVPNIPAddresses;
     }
 }
