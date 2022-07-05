@@ -39,7 +39,7 @@ public class BungeecordServers implements PluginMessageListener {
         String subChannel = in.readUTF();
         if (subChannel.equals("GetServers")) {
             String[] serverList = in.readUTF().split(", ");
-            //I don't why I have to check but If I don't the arraylist will get large of duplicates
+            // I don't why I have to check but If I don't the arraylist will get large of duplicates
             if (this.bungeecordServers.isEmpty()) {
                 this.bungeecordServers.addAll(Arrays.asList(serverList));
                 this.bungeecordServers.removeIf(server -> server.contains("lobby") || server.contains("hub"));

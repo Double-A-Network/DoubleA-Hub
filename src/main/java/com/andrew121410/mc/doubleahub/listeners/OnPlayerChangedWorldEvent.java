@@ -32,12 +32,11 @@ public class OnPlayerChangedWorldEvent implements Listener {
             player.setGameMode(GameMode.CREATIVE);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "invload " + player.getName() + " " + player.getName() + " 2");
         } else if (player.getWorld().getName().equalsIgnoreCase("world")) {
-            ServerCompassSelector.addItemToInventory(player);
             if (event.getFrom().getName().equalsIgnoreCase("plots_60by60")) {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "invsave " + player.getName() + " 2 -s");
                 player.setGameMode(GameMode.SURVIVAL);
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "invload " + player.getName() + " " + player.getName() + " 1");
             }
+            ServerCompassSelector.addItemToInventory(player);
         }
     }
 }

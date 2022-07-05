@@ -25,9 +25,11 @@ public class OnPlayerJoinEvent implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
+        player.performCommand("spawn");
+        player.getInventory().clear();
+
         // Clear the chat for the player
         for (int i = 0; i < 100; i++) player.sendMessage("");
-
 
         // Send welcome message
         player.sendMessage(Translate.chat("&7&m-----------------------------------------------------"));
@@ -37,8 +39,6 @@ public class OnPlayerJoinEvent implements Listener {
                 .append(Component.text("https://discord.gg/pbrueZB").color(TextColor.fromHexString("#551A8B")).decoration(TextDecoration.UNDERLINED, true).clickEvent(ClickEvent.openUrl("https://discord.gg/pbrueZB"))));
         player.sendMessage(Translate.chat("&7&m-----------------------------------------------------"));
 
-        player.getInventory().clear();
         ServerCompassSelector.addItemToInventory(player);
-        player.performCommand("spawn");
     }
 }
