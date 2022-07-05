@@ -36,6 +36,7 @@ public class OnPlayerChangedWorldEvent implements Listener {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "invsave " + player.getName() + " 2 -s");
                 player.setGameMode(GameMode.SURVIVAL);
             }
+            player.getInventory().clear();
             ServerCompassSelector.addItemToInventory(player);
         }
     }
