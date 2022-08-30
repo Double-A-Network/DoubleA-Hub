@@ -1,6 +1,7 @@
 package com.andrew121410.mc.doubleahub.listeners;
 
 import com.andrew121410.mc.doubleahub.DoubleAHub;
+import com.andrew121410.mc.doubleahub.utils.ServerCompassSelector;
 import com.andrew121410.mc.world16utils.chat.Translate;
 import com.andrew121410.mc.world16utils.gui.GUIWindow;
 import com.andrew121410.mc.world16utils.gui.buttons.AbstractGUIButton;
@@ -17,6 +18,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.geysermc.cumulus.SimpleForm;
 import org.geysermc.cumulus.response.SimpleFormResponse;
 import org.geysermc.floodgate.api.FloodgateApi;
@@ -27,11 +29,11 @@ import java.util.List;
 public class OnPlayerInteractEvent implements Listener {
 
     private final DoubleAHub plugin;
-    private final List<String> bungeecordServers;
+    private final List<String> bungeeCordServers;
 
     public OnPlayerInteractEvent(DoubleAHub plugin) {
         this.plugin = plugin;
-        this.bungeecordServers = this.plugin.getSetListMap().getBungeecordServers();
+        this.bungeeCordServers = this.plugin.getSetListMap().getBungeeCordServers();
         this.plugin.getServer().getPluginManager().registerEvents(this, this.plugin);
     }
 
@@ -39,63 +41,69 @@ public class OnPlayerInteractEvent implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         Action action = event.getAction();
+        ItemStack itemInHand = player.getInventory().getItemInMainHand();
 
-        if (player.getInventory().getItemInMainHand().getItemMeta() == null) return;
-        if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Server")) {
+        if (ServerCompassSelector.isServerCompassSelector(itemInHand)) {
             event.setCancelled(true);
-            //Bedrock player
+
             if (FloodgateApi.getInstance().isFloodgatePlayer(player.getUniqueId())) {
-                sendServersForm(player);
+                // Bedrock player
+                openBedrockForm(player);
             } else if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
-                GUIWindow guiWindow = new GUIWindow() {
-                    @Override
-                    public void onCreate(Player player) {
-                        List<AbstractGUIButton> guiButtons = new ArrayList<>();
-                        int guiSlots = bungeecordServers.size() + (9 - (bungeecordServers.size() % 9));
-
-                        int slot = switch (bungeecordServers.size()) {
-                            case 3 -> 3;
-                            case 2 -> 4;
-                            case 1 -> 5;
-                            default -> 2;
-                        };
-
-                        for (String server : bungeecordServers) {
-                            guiButtons.add(new ClickEventButton(slot - 1, InventoryUtils.createItem(Material.ENCHANTED_BOOK, 1, server, "Click me to join the server!"), guiClickEvent -> sendPlayerToServer(player, server)));
-                            slot = slot + 2;
-                        }
-
-                        List<Integer> integers = guiButtons.stream().map(AbstractGUIButton::getSlot).toList();
-                        for (int i = 0; i < 9; i++) {
-                            if (!integers.contains(i)) {
-                                guiButtons.add(new NoEventButton(i, InventoryUtils.createItem(Material.GRAY_STAINED_GLASS_PANE, 1, " ")));
-                            }
-                        }
-
-                        this.update(guiButtons, Translate.color("Servers"), guiSlots);
-
-                        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 1f);
-                    }
-
-                    @Override
-                    public void onClose(InventoryCloseEvent inventoryCloseEvent) {
-
-                    }
-                };
-                guiWindow.open(player);
+                // Java player
+                openGui(player);
             }
         }
     }
 
-    private void sendServersForm(Player player) {
+    private void openBedrockForm(Player player) {
         SimpleForm.Builder simpleForm = SimpleForm.builder().title("Servers!").content("List of servers!");
-        for (String server : this.bungeecordServers) simpleForm.button(server);
+        for (String server : this.bungeeCordServers) simpleForm.button(server);
         simpleForm.responseHandler((form, data) -> {
             SimpleFormResponse simpleFormResponse = form.parseResponse(data);
             if (!simpleFormResponse.isCorrect()) return;
             sendPlayerToServer(player, simpleFormResponse.getClickedButton().getText());
         });
         FloodgateApi.getInstance().sendForm(player.getUniqueId(), simpleForm.build());
+    }
+
+    private void openGui(Player player) {
+        GUIWindow guiWindow = new GUIWindow() {
+            @Override
+            public void onCreate(Player player) {
+                List<AbstractGUIButton> guiButtons = new ArrayList<>();
+                int guiSlots = bungeeCordServers.size() + (9 - (bungeeCordServers.size() % 9));
+
+                int slot = switch (bungeeCordServers.size()) {
+                    case 3 -> 3;
+                    case 2 -> 4;
+                    case 1 -> 5;
+                    default -> 2;
+                };
+
+                for (String server : bungeeCordServers) {
+                    guiButtons.add(new ClickEventButton(slot - 1, InventoryUtils.createItem(Material.ENCHANTED_BOOK, 1, server, "Click me to join the server!"), guiClickEvent -> sendPlayerToServer(player, server)));
+                    slot = slot + 2;
+                }
+
+                List<Integer> integers = guiButtons.stream().map(AbstractGUIButton::getSlot).toList();
+                for (int i = 0; i < 9; i++) {
+                    if (!integers.contains(i)) {
+                        guiButtons.add(new NoEventButton(i, InventoryUtils.createItem(Material.GRAY_STAINED_GLASS_PANE, 1, " ")));
+                    }
+                }
+
+                this.update(guiButtons, Translate.color("Servers"), guiSlots);
+
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 1f);
+            }
+
+            @Override
+            public void onClose(InventoryCloseEvent inventoryCloseEvent) {
+
+            }
+        };
+        guiWindow.open(player);
     }
 
     private void sendPlayerToServer(Player player, String server) {

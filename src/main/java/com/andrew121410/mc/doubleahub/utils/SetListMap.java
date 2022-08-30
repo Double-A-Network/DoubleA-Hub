@@ -7,14 +7,14 @@ import java.util.UUID;
 public class SetListMap {
 
     private final List<UUID> noDoubleJumpUUID;
-    private final List<String> bungeecordServers;
+    private final List<String> bungeeCordServers;
 
     private final List<String> blockedVPNIPAddresses;
     private final List<String> validVPNIPAddresses;
 
     public SetListMap() {
         this.noDoubleJumpUUID = new ArrayList<>();
-        this.bungeecordServers = new ArrayList<>();
+        this.bungeeCordServers = new ArrayList<>();
         this.blockedVPNIPAddresses = new ArrayList<>();
         this.validVPNIPAddresses = new ArrayList<>();
     }
@@ -23,8 +23,8 @@ public class SetListMap {
         return noDoubleJumpUUID;
     }
 
-    public List<String> getBungeecordServers() {
-        return bungeecordServers;
+    public List<String> getBungeeCordServers() {
+        return bungeeCordServers;
     }
 
     public List<String> getBlockedVPNIPAddresses() {

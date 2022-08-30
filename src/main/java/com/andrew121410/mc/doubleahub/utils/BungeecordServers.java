@@ -19,7 +19,7 @@ public class BungeecordServers implements PluginMessageListener {
 
     public BungeecordServers(DoubleAHub plugin) {
         this.plugin = plugin;
-        this.bungeecordServers = this.plugin.getSetListMap().getBungeecordServers();
+        this.bungeecordServers = this.plugin.getSetListMap().getBungeeCordServers();
         Bukkit.getMessenger().registerOutgoingPluginChannel(this.plugin, "BungeeCord");
         Bukkit.getMessenger().registerIncomingPluginChannel(this.plugin, "BungeeCord", this);
     }

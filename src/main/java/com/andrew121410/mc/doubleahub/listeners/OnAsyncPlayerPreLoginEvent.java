@@ -47,7 +47,6 @@ public class OnAsyncPlayerPreLoginEvent implements Listener {
 
         if (vpnResponse.getVpnAPIResponse() == null) {
             event.allow(); // We shouldn't disallow login just because the API is down.
-//            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "Couldn't validate your IP Address");
             return;
         }
 

@@ -33,10 +33,10 @@ public class OnPlayerJoinEvent implements Listener {
 
         // Send welcome message
         player.sendMessage(Translate.chat("&7&m-----------------------------------------------------"));
-        player.sendMessage(Component.text("Welcome to the Double-A Network!").color(TextColor.fromHexString("#ffbf00"))
+        player.sendMessage(Component.text("Welcome to the Double-A Network!").color(TextColor.fromHexString("#FFA500"))
                 .append(Component.newline())
                 .append(Component.text("Discord: ").color(TextColor.fromHexString("#7289da")))
-                .append(Component.text("https://discord.gg/pbrueZB").color(TextColor.fromHexString("#551A8B")).decoration(TextDecoration.UNDERLINED, true).clickEvent(ClickEvent.openUrl("https://discord.gg/pbrueZB"))));
+                .append(Translate.miniMessage("<rainbow>https://discord.gg/pbrueZB").decoration(TextDecoration.UNDERLINED, true).clickEvent(ClickEvent.openUrl("https://discord.gg/pbrueZB"))));
         player.sendMessage(Translate.chat("&7&m-----------------------------------------------------"));
 
         ServerCompassSelector.addItemToInventory(player);
