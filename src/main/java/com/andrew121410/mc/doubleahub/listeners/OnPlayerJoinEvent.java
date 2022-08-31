@@ -41,6 +41,6 @@ public class OnPlayerJoinEvent implements Listener {
 
         ServerCompassSelector.addItemToInventory(player);
 
-        player.sendMessage(Translate.miniMessage("<rainbow>This is a test and only a test"));
+        player.sendMessage(Translate.miniMessage("<rainbow>ANOTHER TESTTTTTTTTTTT"));
     }
 }
