@@ -40,7 +40,5 @@ public class OnPlayerJoinEvent implements Listener {
         player.sendMessage(Translate.chat("&7&m-----------------------------------------------------"));
 
         ServerCompassSelector.addItemToInventory(player);
-
-        player.sendMessage(Translate.miniMessage("<rainbow>ANOTHER TESTTTTTTTTTTT"));
     }
 }
