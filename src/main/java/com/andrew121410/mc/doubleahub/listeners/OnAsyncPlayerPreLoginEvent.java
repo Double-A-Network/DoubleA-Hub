@@ -54,21 +54,9 @@ public class OnAsyncPlayerPreLoginEvent implements Listener {
             // Ran If not using a VPN
             event.allow();
         } else {
-            //Ran if using a VPN
+            // Ran if using a VPN
             event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "Please turn off your VPN");
             this.plugin.getSetListMap().getBlockedVPNIPAddresses().add(ipAddress);
-
-//            TextChannel textChannel = DiscordUtil.getJda().getTextChannelById(912807023756861460L);
-//            if (textChannel == null) return;
-//
-//            EmbedBuilder embedBuilder = new EmbedBuilder()
-//                    .setTitle(event.getName() + " Blocked!", "https://minecraftuuid.com/?search=" + event.getUniqueId())
-//                    .setThumbnail("https://crafatar.com/avatars/" + event.getUniqueId() + ".png")
-//                    .setDescription(event.getName() + "'s connection was blocked as it was flagged as a " + vpnResponse.getWasFlaggedFor())
-//                    .addField("IP Information:", "```json\n" + vpnResponse.getVpnAPIResponse().toJsonPrettyPrint() + "\n```", false)
-//                    .setFooter("Double-A-Hub - (vpnapi.io)");
-//
-//            textChannel.sendMessageEmbeds(embedBuilder.build()).queue();
         }
     }
 }
