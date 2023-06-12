@@ -93,7 +93,7 @@ public class OnPlayerInteractEvent implements Listener {
                     }
                 }
 
-                this.update(guiButtons, Translate.color("Servers"), guiSlots);
+                this.update(guiButtons, Translate.colorc("Servers"), guiSlots);
 
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 1f);
             }
