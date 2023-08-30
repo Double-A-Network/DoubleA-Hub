@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class SetListMap {
+public class MemoryHolder {
 
     private final List<UUID> noDoubleJumpUUID;
     private final List<String> bungeeCordServers;
@@ -12,7 +12,7 @@ public class SetListMap {
     private final List<String> blockedVPNIPAddresses;
     private final List<String> validVPNIPAddresses;
 
-    public SetListMap() {
+    public MemoryHolder() {
         this.noDoubleJumpUUID = new ArrayList<>();
         this.bungeeCordServers = new ArrayList<>();
         this.blockedVPNIPAddresses = new ArrayList<>();

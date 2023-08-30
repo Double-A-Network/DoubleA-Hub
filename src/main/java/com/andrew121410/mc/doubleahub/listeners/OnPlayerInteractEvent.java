@@ -19,8 +19,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.geysermc.cumulus.SimpleForm;
-import org.geysermc.cumulus.response.SimpleFormResponse;
+import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.floodgate.api.FloodgateApi;
 
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class OnPlayerInteractEvent implements Listener {
 
     public OnPlayerInteractEvent(DoubleAHub plugin) {
         this.plugin = plugin;
-        this.bungeeCordServers = this.plugin.getSetListMap().getBungeeCordServers();
+        this.bungeeCordServers = this.plugin.getMemoryHolder().getBungeeCordServers();
         this.plugin.getServer().getPluginManager().registerEvents(this, this.plugin);
     }
 
@@ -57,14 +56,18 @@ public class OnPlayerInteractEvent implements Listener {
     }
 
     private void openBedrockForm(Player player) {
-        SimpleForm.Builder simpleForm = SimpleForm.builder().title("Servers!").content("List of servers!");
-        for (String server : this.bungeeCordServers) simpleForm.button(server);
-        simpleForm.responseHandler((form, data) -> {
-            SimpleFormResponse simpleFormResponse = form.parseResponse(data);
-            if (!simpleFormResponse.isCorrect()) return;
-            sendPlayerToServer(player, simpleFormResponse.getClickedButton().getText());
+        SimpleForm.Builder simpleFormBuilder = SimpleForm.builder().title("Servers!").content("List of servers!");
+
+        // Create the buttons
+        for (String server : this.bungeeCordServers) simpleFormBuilder.button(server);
+
+        // Handle the response
+        simpleFormBuilder.validResultHandler((simpleForm, simpleFormResponse) -> {
+            String serverName = simpleFormResponse.clickedButton().text();
+            sendPlayerToServer(player, serverName);
         });
-        FloodgateApi.getInstance().sendForm(player.getUniqueId(), simpleForm.build());
+
+        FloodgateApi.getInstance().sendForm(player.getUniqueId(), simpleFormBuilder.build());
     }
 
     private void openGui(Player player) {

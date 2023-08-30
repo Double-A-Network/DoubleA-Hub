@@ -3,6 +3,7 @@ package com.andrew121410.mc.doubleahub.listeners;
 import com.andrew121410.mc.doubleahub.DoubleAHub;
 import com.andrew121410.mc.doubleahub.vpn.VpnManager;
 import com.andrew121410.mc.doubleahub.vpn.VpnResponse;
+import com.andrew121410.mc.world16utils.chat.Translate;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
@@ -21,8 +22,8 @@ public class OnAsyncPlayerPreLoginEvent implements Listener {
         this.plugin = plugin;
         this.vpnManager = this.plugin.getVpnManager();
 
-        this.blockedVPNIPAddresses = this.plugin.getSetListMap().getBlockedVPNIPAddresses();
-        this.validVPNIPAddresses = this.plugin.getSetListMap().getValidVPNIPAddresses();
+        this.blockedVPNIPAddresses = this.plugin.getMemoryHolder().getBlockedVPNIPAddresses();
+        this.validVPNIPAddresses = this.plugin.getMemoryHolder().getValidVPNIPAddresses();
 
         this.plugin.getServer().getPluginManager().registerEvents(this, this.plugin);
     }
@@ -31,13 +32,13 @@ public class OnAsyncPlayerPreLoginEvent implements Listener {
     public void fuckBots(AsyncPlayerPreLoginEvent event) {
         String ipAddress = event.getAddress().getHostAddress();
 
-        // No need to use another API request
+        // No need to use another API request (blocked ip cache)
         if (this.blockedVPNIPAddresses.contains(ipAddress)) {
-            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "Please turn off your VPN [cached]");
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, Translate.miniMessage("<red>Please turn off your VPN [cached]"));
             return;
         }
 
-        // No need to use another API request
+        // No need to use another API request (allowed ip cache)
         if (this.validVPNIPAddresses.contains(ipAddress)) {
             event.allow();
             return;
@@ -50,13 +51,15 @@ public class OnAsyncPlayerPreLoginEvent implements Listener {
             return;
         }
 
-        if (vpnResponse.getWasFlaggedFor() == null) {
-            // Ran If not using a VPN
-            event.allow();
-        } else {
-            // Ran if using a VPN
-            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "Please turn off your VPN");
-            this.plugin.getSetListMap().getBlockedVPNIPAddresses().add(ipAddress);
+        // The user is using a VPN (deny entry)
+        if (vpnResponse.getWasFlaggedFor() != null) {
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, Translate.miniMessage("<red>Please turn off your VPN"));
+            this.plugin.getMemoryHolder().getBlockedVPNIPAddresses().add(ipAddress);
+            return;
         }
+
+        // The user is not using a VPN (allow entry)
+        event.allow();
+        this.plugin.getMemoryHolder().getValidVPNIPAddresses().add(ipAddress);
     }
 }

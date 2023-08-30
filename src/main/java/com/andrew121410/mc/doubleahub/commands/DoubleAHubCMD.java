@@ -45,7 +45,7 @@ public class DoubleAHubCMD implements CommandExecutor {
             player.sendMessage("clearservercache");
             return true;
         } else if (args.length == 1 && args[0].equalsIgnoreCase("clearservercache")) {
-            this.plugin.getSetListMap().getBungeeCordServers().clear();
+            this.plugin.getMemoryHolder().getBungeeCordServers().clear();
             this.plugin.getBungeecordServers().getServers();
             player.sendMessage(Translate.miniMessage("<green>Server Cache Cleared!"));
             return true;

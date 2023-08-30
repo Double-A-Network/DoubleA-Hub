@@ -3,7 +3,7 @@ package com.andrew121410.mc.doubleahub;
 import com.andrew121410.mc.doubleahub.commands.DoubleAHubCMD;
 import com.andrew121410.mc.doubleahub.listeners.*;
 import com.andrew121410.mc.doubleahub.utils.BungeecordServers;
-import com.andrew121410.mc.doubleahub.utils.SetListMap;
+import com.andrew121410.mc.doubleahub.utils.MemoryHolder;
 import com.andrew121410.mc.doubleahub.vpn.VpnManager;
 import com.andrew121410.mc.doubleahub.worldguard.DoubleJumpFlagHandler;
 import com.andrew121410.mc.world16utils.updater.UpdateManager;
@@ -12,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class DoubleAHub extends JavaPlugin {
 
     private static DoubleAHub plugin;
-    private SetListMap setListMap;
+    private MemoryHolder memoryHolder;
 
     private BungeecordServers bungeecordServers;
     private VpnManager vpnManager;
@@ -29,7 +29,7 @@ public class DoubleAHub extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
-        this.setListMap = new SetListMap();
+        this.memoryHolder = new MemoryHolder();
 
         this.getConfig().addDefault("VPN-API", "key");
         this.getConfig().options().copyDefaults(true);
@@ -65,8 +65,8 @@ public class DoubleAHub extends JavaPlugin {
         new OnPlayerChangedWorldEvent(this);
     }
 
-    public SetListMap getSetListMap() {
-        return setListMap;
+    public MemoryHolder getMemoryHolder() {
+        return memoryHolder;
     }
 
     public BungeecordServers getBungeecordServers() {

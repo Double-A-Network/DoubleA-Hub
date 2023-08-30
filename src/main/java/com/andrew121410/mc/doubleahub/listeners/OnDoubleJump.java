@@ -28,7 +28,7 @@ public class OnDoubleJump implements Listener {
     @EventHandler
     public void onPlayerMoveEvent(PlayerMoveEvent event) {
         Player player = event.getPlayer();
-        if (this.plugin.getSetListMap().getNoDoubleJumpUUID().contains(player.getUniqueId())) return;
+        if (this.plugin.getMemoryHolder().getNoDoubleJumpUUID().contains(player.getUniqueId())) return;
         if (player.getGameMode() == GameMode.CREATIVE) return;
         if (player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.AIR) return;
         if (player.isFlying()) return;
@@ -43,7 +43,7 @@ public class OnDoubleJump implements Listener {
     @EventHandler
     public void onPlayerToggleFlightEvent(PlayerToggleFlightEvent event) {
         Player player = event.getPlayer();
-        if (this.plugin.getSetListMap().getNoDoubleJumpUUID().contains(player.getUniqueId())) return;
+        if (this.plugin.getMemoryHolder().getNoDoubleJumpUUID().contains(player.getUniqueId())) return;
         if (player.getGameMode() == GameMode.CREATIVE) return;
         if (!DoubleJumpFlagHandler.canJump(player.getLocation())) {
             event.setCancelled(true);

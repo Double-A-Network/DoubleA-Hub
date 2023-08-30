@@ -19,7 +19,9 @@ public class BungeecordServers implements PluginMessageListener {
 
     public BungeecordServers(DoubleAHub plugin) {
         this.plugin = plugin;
-        this.bungeecordServers = this.plugin.getSetListMap().getBungeeCordServers();
+        this.bungeecordServers = this.plugin.getMemoryHolder().getBungeeCordServers();
+
+        // Register the channels
         Bukkit.getMessenger().registerOutgoingPluginChannel(this.plugin, "BungeeCord");
         Bukkit.getMessenger().registerIncomingPluginChannel(this.plugin, "BungeeCord", this);
     }
@@ -37,12 +39,16 @@ public class BungeecordServers implements PluginMessageListener {
         }
         ByteArrayDataInput in = ByteStreams.newDataInput(bytes);
         String subChannel = in.readUTF();
+
         if (subChannel.equals("GetServers")) {
             String[] serverList = in.readUTF().split(", ");
-            // I don't why I have to check but If I don't the arraylist will get large of duplicates
+
             if (this.bungeecordServers.isEmpty()) {
                 this.bungeecordServers.addAll(Arrays.asList(serverList));
+
+                // Remove the lobby and hub servers from the list
                 this.bungeecordServers.removeIf(server -> server.contains("lobby") || server.contains("hub"));
+
                 Collections.reverse(this.bungeecordServers);
             }
         }

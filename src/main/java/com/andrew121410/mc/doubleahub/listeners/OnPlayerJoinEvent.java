@@ -39,6 +39,11 @@ public class OnPlayerJoinEvent implements Listener {
                 .append(Translate.miniMessage("<rainbow>https://discord.gg/pbrueZB").decoration(TextDecoration.UNDERLINED, true).clickEvent(ClickEvent.openUrl("https://discord.gg/pbrueZB"))));
         player.sendMessage(Translate.chat("&7&m-----------------------------------------------------"));
 
+        // Hotfix for the server selector being empty
+        if (this.plugin.getMemoryHolder().getBungeeCordServers().isEmpty()) {
+            this.plugin.getBungeecordServers().getServers();
+        }
+
         ServerCompassSelector.addItemToInventory(player);
     }
 }
