@@ -1,9 +1,9 @@
 package com.andrew121410.mc.doubleahub;
 
 
-import com.andrew121410.mc.world16utils.utils.ccutils.utils.HashBasedUpdater;
+import com.andrew121410.mc.world16utils.updater.World16HashBasedUpdater;
 
-public class Updater extends HashBasedUpdater {
+public class Updater extends World16HashBasedUpdater {
 
     private static final String JAR_URL = "https://github.com/Double-A-Network/DoubleA-Hub/releases/download/latest/DoubleA-Hub.jar";
     private static final String HASH_URL = "https://github.com/Double-A-Network/DoubleA-Hub/releases/download/latest/hash.txt";
