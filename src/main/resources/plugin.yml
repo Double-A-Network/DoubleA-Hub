@@ -1,17 +1,17 @@
 name: DoubleA-Hub
-version: 1.0
+version: ${version}
 author: Andrew121410
 main: com.andrew121410.mc.doubleahub.DoubleAHub
-api-version: 1.20
+api-version: 1.21
 depend:
   - WorldGuard
   - World1-6Utils
   - floodgate
 libraries:
-  - "com.fasterxml.jackson.core:jackson-annotations:2.18.1"
-  - "com.fasterxml.jackson.core:jackson-core:2.18.1"
-  - "com.fasterxml.jackson.core:jackson-databind:2.18.1"
-  - "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.1"
+  - "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
+  - "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
+  - "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+  - "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${jacksonVersion}"
 
 commands:
   doubleahub:
