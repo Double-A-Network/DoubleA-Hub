@@ -13,3 +13,7 @@ com-github-world1-v6-world1-v6utils-world1-v6utils-plugin = { module = "com.gith
 com-sk89q-worldguard-worldguard-bukkit = { module = "com.sk89q.worldguard:worldguard-bukkit", version.ref = "worldguard-bukkit" }
 io-papermc-paper-paper-api = { module = "io.papermc.paper:paper-api", version.ref = "paper-api" }
 org-geysermc-floodgate-api = { module = "org.geysermc.floodgate:api", version.ref = "floodgate-api" }
+jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jackson" }
+jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jackson" }
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
+jackson-dataformat-yaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jackson" }

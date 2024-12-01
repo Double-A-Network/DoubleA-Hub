@@ -62,11 +62,10 @@ dependencies {
     compileOnly(libs.org.geysermc.floodgate.api)
 
     // Jackson -> https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
-    val jacksonVersion = libs.versions.jackson.get()
-    compileOnly("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
-    compileOnly("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
-    compileOnly("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
-    compileOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
+    compileOnly(libs.jackson.core)
+    compileOnly(libs.jackson.annotations)
+    compileOnly(libs.jackson.databind)
+    compileOnly(libs.jackson.dataformat.yaml)
 }
 
 tasks.named<ProcessResources>("processResources") {
