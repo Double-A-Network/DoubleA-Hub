@@ -3,9 +3,9 @@
 
 [versions]
 jackson = "2.18.2"
-world16-utils = "9d570d7c13"
-worldguard-bukkit = "7.1.0-SNAPSHOT"
-paper-api = "1.21.3-R0.1-SNAPSHOT"
+world16-utils = "2f0bf39de7"
+worldguard-bukkit = "7.0.13-SNAPSHOT"
+paper-api = "1.21.4-R0.1-SNAPSHOT"
 floodgate-api = "2.2.3-SNAPSHOT"
 
 [libraries]
