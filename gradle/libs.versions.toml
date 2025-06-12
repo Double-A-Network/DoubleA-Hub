@@ -4,7 +4,7 @@
 [versions]
 jackson = "2.19.0"
 world16-utils = "2f0bf39de7"
-worldguard-bukkit = "7.0.13"
+worldguard-bukkit = "7.0.14"
 paper-api = "1.21.4-R0.1-SNAPSHOT"
 floodgate-api = "2.2.3-SNAPSHOT"
 
