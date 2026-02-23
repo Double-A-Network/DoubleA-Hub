@@ -2,18 +2,17 @@
 # https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
 
 [versions]
-jackson = "2.20.1"
-world16-utils = "2f0bf39de7"
+jackson = "3.1.0"
+world16-utils = "cbfa5ab713"
 worldguard-bukkit = "7.0.15"
-paper-api = "1.21.4-R0.1-SNAPSHOT"
-floodgate-api = "2.2.3-SNAPSHOT"
+paper-api = "1.21.11-R0.1-SNAPSHOT"
+floodgate-api = "2.2.5-SNAPSHOT"
 
 [libraries]
 com-github-world1-v6-world1-v6utils-world1-v6utils-plugin = { module = "com.github.World1-6.World1-6Utils:World1-6Utils-Plugin", version.ref = "world16-utils" }
 com-sk89q-worldguard-worldguard-bukkit = { module = "com.sk89q.worldguard:worldguard-bukkit", version.ref = "worldguard-bukkit" }
 io-papermc-paper-paper-api = { module = "io.papermc.paper:paper-api", version.ref = "paper-api" }
 org-geysermc-floodgate-api = { module = "org.geysermc.floodgate:api", version.ref = "floodgate-api" }
-jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jackson" }
-jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jackson" }
-jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
-jackson-dataformat-yaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jackson" }
+jackson-core = { module = "tools.jackson.core:jackson-core", version.ref = "jackson" }
+jackson-databind = { module = "tools.jackson.core:jackson-databind", version.ref = "jackson" }
+jackson-dataformat-yaml = { module = "tools.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jackson" }

@@ -8,10 +8,9 @@ depend:
   - World1-6Utils
   - floodgate
 libraries:
-  - "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
-  - "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
-  - "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
-  - "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${jacksonVersion}"
+  - "tools.jackson.core:jackson-core:${jacksonVersion}"
+  - "tools.jackson.core:jackson-databind:${jacksonVersion}"
+  - "tools.jackson.dataformat:jackson-dataformat-yaml:${jacksonVersion}"
 
 commands:
   doubleahub:

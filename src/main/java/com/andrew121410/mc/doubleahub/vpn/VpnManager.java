@@ -1,7 +1,7 @@
 package com.andrew121410.mc.doubleahub.vpn;
 
 import com.andrew121410.mc.doubleahub.DoubleAHub;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import java.net.URI;
 import java.net.http.HttpClient;

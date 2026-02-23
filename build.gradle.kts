@@ -8,8 +8,8 @@ group = "com.andrew121410.mc"
 version = "1.0-SNAPSHOT"
 description = "DoubleA-Hub"
 
-java.sourceCompatibility = JavaVersion.VERSION_21
-java.targetCompatibility = JavaVersion.VERSION_21
+java.sourceCompatibility = JavaVersion.VERSION_25
+java.targetCompatibility = JavaVersion.VERSION_25
 
 tasks {
     build {
@@ -23,6 +23,7 @@ tasks {
 
     compileJava {
         options.encoding = "UTF-8"
+        options.release.set(25)
     }
 
     shadowJar {
@@ -61,9 +62,8 @@ dependencies {
     compileOnly(libs.com.sk89q.worldguard.worldguard.bukkit)
     compileOnly(libs.org.geysermc.floodgate.api)
 
-    // Jackson -> https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+    // Jackson -> https://mvnrepository.com/artifact/tools.jackson.core/jackson-core
     compileOnly(libs.jackson.core)
-    compileOnly(libs.jackson.annotations)
     compileOnly(libs.jackson.databind)
     compileOnly(libs.jackson.dataformat.yaml)
 }
