@@ -2,7 +2,7 @@
 # https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
 
 [versions]
-jackson = "3.1.1"
+jackson = "3.1.2"
 world16-utils = "cbfa5ab713"
 worldguard-bukkit = "7.0.16"
 paper-api = "1.21.11-R0.1-SNAPSHOT"
