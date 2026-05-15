@@ -3,11 +3,9 @@ package com.andrew121410.mc.doubleahub.listeners;
 import com.andrew121410.mc.doubleahub.DoubleAHub;
 import com.andrew121410.mc.doubleahub.worldguard.DoubleJumpFlagHandler;
 import com.andrew121410.mc.world16utils.chat.Translate;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -47,7 +45,7 @@ public class OnDoubleJump implements Listener {
         if (player.getGameMode() == GameMode.CREATIVE) return;
         if (!DoubleJumpFlagHandler.canJump(player.getLocation())) {
             event.setCancelled(true);
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Translate.color("&cYou are in a no DoubleJump zone!")));
+            player.sendActionBar(Translate.miniMessage("<red>You are in a no DoubleJump zone!"));
             return;
         }
 
@@ -55,6 +53,6 @@ public class OnDoubleJump implements Listener {
         player.setAllowFlight(false);
         player.setFlying(false);
         player.setVelocity(player.getLocation().getDirection().multiply(1.0D).setY(1.0D));
-        player.playEffect(player.getLocation(), Effect.BLAZE_SHOOT, 0);
+        player.playSound(player.getLocation(), Sound.ENTITY_BLAZE_SHOOT, 1.0f, 1.0f);
     }
 }

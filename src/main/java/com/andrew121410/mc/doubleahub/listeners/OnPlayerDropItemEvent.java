@@ -27,7 +27,7 @@ public class OnPlayerDropItemEvent implements Listener {
             event.setCancelled(true);
         } else if (player.isOp() && ServerCompassSelector.isServerCompassSelector(item.getItemStack())) {
             item.remove();
-            player.sendMessage(Translate.color("&aYou have removed the server compass."));
+            player.sendMessage(Translate.miniMessage("<green>You have removed the server compass."));
         }
     }
 }

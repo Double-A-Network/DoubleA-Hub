@@ -32,12 +32,12 @@ public class OnPlayerJoinEvent implements Listener {
         for (int i = 0; i < 100; i++) player.sendMessage("");
 
         // Send welcome message
-        player.sendMessage(Translate.chat("&7&m-----------------------------------------------------"));
+        player.sendMessage(Translate.colorc("&7&m-----------------------------------------------------"));
         player.sendMessage(Component.text("Welcome to the Double-A Network!").color(TextColor.fromHexString("#FFA500"))
                 .append(Component.newline())
                 .append(Component.text("Discord: ").color(TextColor.fromHexString("#7289da")))
                 .append(Translate.miniMessage("<rainbow>https://discord.gg/pbrueZB").decoration(TextDecoration.UNDERLINED, true).clickEvent(ClickEvent.openUrl("https://discord.gg/pbrueZB"))));
-        player.sendMessage(Translate.chat("&7&m-----------------------------------------------------"));
+        player.sendMessage(Translate.colorc("&7&m-----------------------------------------------------"));
 
         // Hotfix for the server selector being empty
         if (this.plugin.getMemoryHolder().getBungeeCordServers().isEmpty()) {

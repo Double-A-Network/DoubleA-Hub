@@ -4,12 +4,14 @@ import com.andrew121410.mc.doubleahub.DoubleAHub;
 import com.andrew121410.mc.doubleahub.utils.ServerCompassSelector;
 import com.andrew121410.mc.world16utils.chat.Translate;
 import com.andrew121410.mc.world16utils.gui.GUIWindow;
+import com.andrew121410.mc.world16utils.gui.animation.Animation;
 import com.andrew121410.mc.world16utils.gui.buttons.AbstractGUIButton;
 import com.andrew121410.mc.world16utils.gui.buttons.defaults.ClickEventButton;
 import com.andrew121410.mc.world16utils.gui.buttons.defaults.NoEventButton;
 import com.andrew121410.mc.world16utils.utils.InventoryUtils;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -85,7 +87,11 @@ public class OnPlayerInteractEvent implements Listener {
                 };
 
                 for (String server : bungeeCordServers) {
-                    guiButtons.add(new ClickEventButton(slot - 1, InventoryUtils.createItem(Material.ENCHANTED_BOOK, 1, server, "Click me to join the server!"), guiClickEvent -> sendPlayerToServer(player, server)));
+                    ClickEventButton button = new ClickEventButton(slot - 1, InventoryUtils.createItem(Material.ENCHANTED_BOOK, 1, server, "Click me to join the server!"), guiClickEvent -> sendPlayerToServer(player, server));
+                    button.animate(() -> InventoryUtils.createItem(Material.ENCHANTED_BOOK, 1,
+                            Animation.wave(server, TextColor.color(0x00BFFF), TextColor.color(0x9B59B6), TextColor.color(0x00BFFF)),
+                            Translate.colorc("Click me to join the server!")));
+                    guiButtons.add(button);
                     slot = slot + 2;
                 }
 

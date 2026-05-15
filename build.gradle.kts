@@ -13,8 +13,7 @@ java.targetCompatibility = JavaVersion.VERSION_25
 
 tasks {
     build {
-        dependsOn("shadowJar")
-        dependsOn("processResources")
+        dependsOn(shadowJar)
     }
 
     jar {
@@ -24,6 +23,7 @@ tasks {
     compileJava {
         options.encoding = "UTF-8"
         options.release.set(25)
+        options.compilerArgs.add("-Xlint:deprecation")
     }
 
     shadowJar {
@@ -68,11 +68,14 @@ dependencies {
     compileOnly(libs.jackson.dataformat.yaml)
 }
 
+val projectVersion = version.toString()
+val jacksonVersion = libs.versions.jackson.get()
+
 tasks.named<ProcessResources>("processResources") {
-    inputs.property("version", project.version)
-    inputs.property("jacksonVersion", libs.versions.jackson.get())
+    inputs.property("version", projectVersion)
+    inputs.property("jacksonVersion", jacksonVersion)
 
     filesMatching("plugin.yml") {
-        expand("version" to project.version, "jacksonVersion" to libs.versions.jackson.get())
+        expand("version" to projectVersion, "jacksonVersion" to jacksonVersion)
     }
 }
