@@ -32,9 +32,15 @@ public class VpnManager {
         VpnAPIResponse vpnAPIResponse = getVpnAPIResponse(ipAddress);
         String wasFlaggedFor = null;
         if (vpnAPIResponse != null) {
-            for (Map.Entry<String, Boolean> stringBooleanEntry : vpnAPIResponse.getSecurity().entrySet()) {
-                if (stringBooleanEntry.getValue()) wasFlaggedFor = stringBooleanEntry.getKey();
+            if (vpnAPIResponse.getSecurity() == null) {
+                this.plugin.getLogger().warning("[VPN] Security field was null for " + ipAddress + " — API response:\n" + vpnAPIResponse.toJsonPrettyPrint());
+            } else {
+                for (Map.Entry<String, Boolean> stringBooleanEntry : vpnAPIResponse.getSecurity().entrySet()) {
+                    if (stringBooleanEntry.getValue()) wasFlaggedFor = stringBooleanEntry.getKey();
+                }
             }
+        } else {
+            this.plugin.getLogger().warning("[VPN] No response from API for " + ipAddress);
         }
         return new VpnResponse(wasFlaggedFor, vpnAPIResponse);
     }
