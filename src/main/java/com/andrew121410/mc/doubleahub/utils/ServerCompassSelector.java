@@ -15,7 +15,7 @@ public class ServerCompassSelector {
     private static final NamespacedKey KEY = new NamespacedKey(DoubleAHub.getPlugin(), "server_compass");
 
     public static void addItemToInventory(Player player) {
-        ItemStack compass = InventoryUtils.createItem(Material.COMPASS, 1, Translate.colorc("<aqua>Servers!"), Translate.miniMessage("Click me to show a list of servers!"));
+        ItemStack compass = InventoryUtils.createItem(Material.COMPASS, 1, Translate.miniMessage("<aqua>Servers!"), Translate.miniMessage("Click me to show a list of servers!"));
         ItemMeta meta = compass.getItemMeta();
         meta.getPersistentDataContainer().set(KEY, PersistentDataType.BOOLEAN, true);
         compass.setItemMeta(meta);
